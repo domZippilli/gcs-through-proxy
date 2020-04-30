@@ -19,10 +19,9 @@ OUTPUT="${5?$(usage)}"
 # Get this from https://developers.google.com/oauthplayground/ -- Use GCS scopes
 OAUTH2_ACCESS_TOKEN=$(< ${TOKEN_FILE})
 
-curl \
+curl --verbose \
+  -http2-prior-knowledge \
   -k \
-  -X GET \
   -H "Authorization: Bearer ${OAUTH2_ACCESS_TOKEN}" \
-  -H "Host: storage.googleapis.com" \
   -o "${OUTPUT}" \
   "https://${GCS_PROXY_HOST}/storage/v1/b/${BUCKET}/o/${OBJECT}?alt=media"

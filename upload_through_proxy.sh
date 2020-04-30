@@ -19,10 +19,9 @@ OBJECT="${5?$(usage)}"
 # Get this from https://developers.google.com/oauthplayground/ -- Use GCS scopes
 OAUTH2_ACCESS_TOKEN=$(< ${TOKEN_FILE})
 
-curl \
+curl --verbose \
   -k \
-  -X POST \
+  -http2-prior-knowledge \
   --data-binary @"${INPUT}" \
   -H "Authorization: Bearer ${OAUTH2_ACCESS_TOKEN}" \
-  -H "Host: storage.googleapis.com" \
   "https://${GCS_PROXY_HOST}/upload/storage/v1/b/${BUCKET}/o?uploadType=media&name=${OBJECT}"
