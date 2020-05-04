@@ -44,3 +44,19 @@ Runs a gsutil command through a proxy. You may also need to set -oBoto:https_val
 ```
 
 Simply treat this script as you would `gsutil` but with a first argument for your proxy.
+
+## Signed URLs
+
+For a signed URL, you should expect to have to do some minor URL rewriting in order for this to work.
+
+Generate a signed URL as follows:
+
+`./gsutil_proxy.sh YOUR_PROXY -i url-signer@YOUR_PROJECT.iam.gserviceaccount.com signurl -d 10m -u -r us-west1 gs://YOUR_BUCKET/YOUR_OBJECT`
+
+You'll get a URL like `https://storage.googleapis.com/YOUR_BUCKET/YOUR_OBJECT?x-goog-signature=...`
+
+Access this URL by substituting your proxy for `storage.googleapis.com`; i.e., pipe the URL into `sed 's/storage\.googleapis\.com/YOUR_PROXY/`. You can combine this into a single command like so:
+
+`./gsutil_proxy.sh YOUR_PROXY -i url-signer@YOUR_PROJECT.iam.gserviceaccount.com signurl -d 10m -u -r us-west1 gs://YOUR_BUCKET/YOUR_OBJECT | sed 's/storage\.googleapis\.com/YOUR_PROXY/`
+
+Resulting in: `https://YOUR_PROXY/YOUR_BUCKET/YOUR_OBJECT?x-goog-signature=...`

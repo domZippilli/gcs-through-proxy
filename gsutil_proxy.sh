@@ -10,6 +10,6 @@ function usage(){
 
 PROXY="${1?$(usage)}"
 
-CMD="gsutil -m -oCredentials:gs_json_host_header=storage.googleapis.com -oCredentials:gs_host_header=storage.googleapis.com -oCredentials:gs_json_host=${PROXY} -oCredentials:gs_host=${PROXY}"
+CMD="gsutil -m -oCredentials:gs_json_host_header=storage.googleapis.com -oCredentials:gs_json_host=${PROXY}"
 shift
 $CMD "$@"
