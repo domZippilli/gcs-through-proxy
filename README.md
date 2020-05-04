@@ -1,4 +1,4 @@
-# gcs-through-proxy
+# gcs-through-gclb-proxy
 
 Shell scripts showing use of GCS through a proxy with `curl`.
 
